@@ -76,21 +76,53 @@ object ParserUtils {
         }
     }
 
+    fun parseNumberListCondition(value: String): MatchCondition {
+        return when {
+            value.startsWith("any(") || value.startsWith("all(") || value.startsWith("none(") -> {
+                val type = when {
+                    value.startsWith("any") -> CompoundType.ANY
+                    value.startsWith("all") -> CompoundType.ALL
+                    value.startsWith("none") -> CompoundType.NONE
+                    value.startsWith("not") -> CompoundType.NONE
+                    else -> CompoundType.NONE
+                }
+                // lore:any(contains(b),startsWith(a),regex(^1-9))
+                val args = value.substringAfter("(").substringBeforeLast(')')
+                    .split(',')
+                    .map { it.trim().removeSurrounding("\"") }
+                if (args.isEmpty()) return MatchCondition.StringCondition(EXACT, emptyList())
+                MatchCondition.CompoundCondition(type, args.map {
+                    parseNumberCondition(it)
+                })
+            }
+
+            else -> parseNumberCondition(value)
+        }
+    }
+
     fun parseNumberCondition(value: String): MatchCondition.NumberCondition {
-        val pattern = Regex("""^(>=|<=|>|<)?(\d+)$""")
+        // 新正则表达式：捕获[前缀][操作符][数值]三部分
+        val pattern = Regex("""^(\w+?)?(>=|<=|>|<|=)?(\d+)$""")
         val match = pattern.matchEntire(value) ?: return MatchCondition.NumberCondition(
-            NumberOperator.EQUAL,
-            value.toInt()
+            operator = NumberOperator.EQUAL,
+            value = value.toIntOrNull() ?: 0
         )
 
-        val num = match.groupValues[2].toInt()
-        return when (match.groupValues[1]) {
-            ">=" -> MatchCondition.NumberCondition(NumberOperator.GREATER_EQUAL, num)
-            "<=" -> MatchCondition.NumberCondition(NumberOperator.LESS_EQUAL, num)
-            ">" -> MatchCondition.NumberCondition(NumberOperator.GREATER, num)
-            "<" -> MatchCondition.NumberCondition(NumberOperator.LESS, num)
-            else -> MatchCondition.NumberCondition(NumberOperator.EQUAL, num)
+        val (rawTag, rawOp, rawValue) = match.destructured
+        val tag = rawTag.takeIf { it.isNotEmpty() }
+        val operator = when (rawOp) {
+            ">=" -> NumberOperator.GREATER_EQUAL
+            "<=" -> NumberOperator.LESS_EQUAL
+            ">" -> NumberOperator.GREATER
+            "<" -> NumberOperator.LESS
+            else -> NumberOperator.EQUAL
         }
+        val num = rawValue.toIntOrNull() ?: 0
+
+        return MatchCondition.NumberCondition(
+            operator = operator,
+            value = num
+        ).also { it.tag = tag ?: "" }
     }
 
     // parseNbt("key1=1;key2=2;key3=3")

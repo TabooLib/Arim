@@ -5,66 +5,15 @@ import org.bukkit.inventory.ItemStack
 import top.maplex.arim.tools.itemmatch.model.CompoundType
 import top.maplex.arim.tools.itemmatch.model.MatchCondition
 import top.maplex.arim.tools.itemmatch.model.NumberOperator
-import top.maplex.arim.tools.itemmatch.model.StringOperation
+import top.maplex.arim.tools.itemmatch.util.ParserUtils
 
 class EnchantHandler : ItemHandler {
 
     override fun check(item: ItemStack, value: String): Boolean {
-        return when (val condition = parseEnchantCondition(value)) {
+        return when (val condition = ParserUtils.parseNumberListCondition(value)) {
             is MatchCondition.CompoundCondition -> checkCompoundCondition(item, condition)
-            is MatchCondition.NumberCondition -> checkSingleEnchant(item, value)
+            is MatchCondition.NumberCondition -> checkCondition(item, condition)
             else -> false
-        }
-    }
-
-    private fun parseEnchantCondition(value: String): MatchCondition {
-        return when {
-            value.contains('|') -> {
-                val subConditions = value.split('|').map { parseSingleCondition(it.trim()) }
-                MatchCondition.CompoundCondition(CompoundType.ANY, subConditions)
-            }
-
-            value.contains('&') -> {
-                val subConditions = value.split('&').map { parseSingleCondition(it.trim()) }
-                MatchCondition.CompoundCondition(CompoundType.ALL, subConditions)
-            }
-
-            else -> parseSingleCondition(value)
-        }
-    }
-
-    private fun parseSingleCondition(condition: String): MatchCondition {
-        val pattern = Regex("""(\w+)(>=|<=|>|<|=)?(\d+)""")
-        val match = pattern.matchEntire(condition) ?: return MatchCondition.StringCondition(
-            StringOperation.EXACT,
-            listOf(condition)
-        )
-
-        return MatchCondition.NumberCondition(
-            when (match.groupValues[2]) {
-                ">=" -> NumberOperator.GREATER_EQUAL
-                "<=" -> NumberOperator.LESS_EQUAL
-                ">" -> NumberOperator.GREATER
-                "<" -> NumberOperator.LESS
-                else -> NumberOperator.EQUAL
-            },
-            match.groupValues[3].toInt()
-        ).apply {
-            tag = match.groupValues[1].uppercase()
-        }
-    }
-
-    private fun checkSingleEnchant(item: ItemStack, value: String): Boolean {
-        val (enchantName, operator, level) = parseEnchantExpression(value) ?: return false
-        val enchant = Enchantment.getByName(enchantName) ?: return false
-        val actualLevel = item.getEnchantmentLevel(enchant)
-
-        return when (operator) {
-            ">" -> actualLevel > level
-            "<" -> actualLevel < level
-            ">=" -> actualLevel >= level
-            "<=" -> actualLevel <= level
-            else -> actualLevel == level
         }
     }
 
@@ -89,22 +38,7 @@ class EnchantHandler : ItemHandler {
                     else -> actualLevel == condition.value
                 }
             }
-
-            is MatchCondition.StringCondition -> {
-                Enchantment.values().any { it.name.equals(condition.values.first(), true) }
-            }
-
             else -> false
         }
-    }
-
-    private fun parseEnchantExpression(exp: String): Triple<String, String, Int>? {
-        val pattern = Regex("""(\w+)(>=|<=|>|<|=)?(\d+)""")
-        val match = pattern.matchEntire(exp) ?: return null
-        return Triple(
-            match.groupValues[1],
-            match.groupValues[2].takeIf { it.isNotEmpty() } ?: "=",
-            match.groupValues[3].toInt()
-        )
     }
 }
