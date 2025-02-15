@@ -1,22 +1,39 @@
 # Arim （城市）
 
-### 项目使用 TabooLib Start Jar 创建!
-### 爱来自枫溪
+[![](https://jitpack.io/v/FxRayHughes/Arim.svg)](https://jitpack.io/#FxRayHughes/Arim)
 
-## 构建发行版本
+## 本工具库集合:
+- 双栈计算器 - Saukiya
+- 符号树变量计算器 - Saukiya
+- 条件表达式求值器 - 枫溪
+- 物品匹配工具 - 枫溪
 
-发行版本用于正常使用, 不含 TabooLib 本体。
+## 使用方法
 
+1. 设置仓库
+
+```kts
+repositories {
+    mavenCentral()
+    maven { url = uri("https://jitpack.io") }
+}
 ```
-./gradlew clean build
+
+2. 添加依赖
+
+```kts
+dependencies {
+    taboo("com.github.FxRayHughes:Arim:Tag")
+}
 ```
 
-## 构建开发版本
+3. 设置重定向
 
-开发版本包含 TabooLib 本体, 用于开发者使用, 但不可运行。
-
+```kts
+taboolib{
+    relocate("top.maplex.arim","xxx.xxx.arim")
+}
 ```
-./gradlew clean taboolibBuildApi -PDeleteCode
-```
 
-> 参数 -PDeleteCode 表示移除所有逻辑代码以减少体积。
+## 模块文档
+https://taboolib.feishu.cn/wiki/PisKwWgRHirVeRkAz9ncDY7Cn2d?from=from_copylink
