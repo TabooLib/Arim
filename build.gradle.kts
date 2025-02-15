@@ -3,11 +3,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
+    `maven-publish`
     id("io.izzel.taboolib") version "2.0.22"
     kotlin("jvm") version "2.1.10"
 }
 
 taboolib {
+    subproject = true
     env {
         // 安装模块
         install(Basic, Bukkit, BukkitHook, BukkitNMSUtil)
@@ -43,4 +45,25 @@ tasks.withType<KotlinCompile> {
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+publishing {
+    repositories {
+        maven("http://sacredcraft.cn:8081/repository/releases") {
+            isAllowInsecureProtocol = true
+            credentials {
+                username = project.findProperty("taboolibUsername").toString()
+                password = project.findProperty("taboolibPassword").toString()
+            }
+            authentication {
+                create<BasicAuthentication>("basic")
+            }
+        }
+        mavenLocal()
+    }
+    publications {
+        create<MavenPublication>("maven") {
+            from(components.findByName("java"))
+        }
+    }
 }
