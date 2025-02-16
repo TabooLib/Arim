@@ -54,7 +54,10 @@ data class FolderReader(val file: File) {
 
     fun walk(action: Configuration.() -> Unit) {
         val walk = file.walk().filter { it.isFile }.filter { getTypeFromExtension(it.extension) in readTypes }
-        filter.forEach { walk.filter(it) }
+        // from @xiaobai
+        walk.filter{file->
+            filter.all { it(file) }
+        }
         walk.forEach { inline ->
             loadFromFile(inline, getTypeFromExtension(inline.extension)).also(action)
         }
