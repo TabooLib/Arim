@@ -1,8 +1,8 @@
 name: Publish to TabooLib Repository
 
 on:
-  push:
-    branches: [ master ] 
+  release:
+    types: [created]
 
 jobs:
   publish:
