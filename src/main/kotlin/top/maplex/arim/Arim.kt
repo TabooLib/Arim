@@ -53,7 +53,7 @@ object Arim {
      * 生物发光:
      * 可用版本: 1.12.2 1.16.5 1.17以上(已测试1.18.2, 1.19.4, 1.20.1, 1.20.4, 1.21.1, 1.21.4)
      * 方块发光
-     * 可用版本: 根据不同模式, 见[top.maplex.arim.glow.internal.pojo.BlockGlowMode]
+     * 可用版本: 根据不同模式, 见[top.maplex.arim.tools.glow.internal.pojo.BlockGlowMode]
      */
     val glow by lazy { IGlow() }
 }

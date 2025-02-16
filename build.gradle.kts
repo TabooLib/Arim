@@ -5,7 +5,7 @@ plugins {
     java
     `maven-publish`
     id("io.izzel.taboolib") version "2.0.22"
-    kotlin("jvm") version "2.1.10"
+    kotlin("jvm") version "1.8.22"
 }
 
 taboolib {
@@ -16,7 +16,7 @@ taboolib {
     }
     version {
         taboolib = "6.2.3"
-        coroutines = "1.10.1"
+        //coroutines = "1.10.1"
     }
 }
 

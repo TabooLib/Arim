@@ -35,7 +35,7 @@ class FlagHandler : ItemHandler {
     }
 
     private fun checkSingleFlag(meta: ItemMeta, value: String): Boolean {
-        val flag = ItemFlag.entries.firstOrNull { it.name.equals(value, true) } ?: return false
+        val flag = ItemFlag.values().firstOrNull { it.name.equals(value, true) } ?: return false
         return meta.hasItemFlag(flag)
     }
 }
