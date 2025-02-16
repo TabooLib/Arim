@@ -2,7 +2,7 @@ name: Publish to TabooLib Repository
 
 on:
   push:
-    branches: [ main ]  # 可以根据需要修改触发分支
+    branches: [ master ] 
 
 jobs:
   publish:
