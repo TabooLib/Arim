@@ -5,7 +5,7 @@ plugins {
     java
     `maven-publish`
     id("io.izzel.taboolib") version "2.0.22"
-    kotlin("jvm") version "2.1.10"
+    kotlin("jvm") version "1.8.22"
 }
 
 taboolib {
@@ -16,17 +16,21 @@ taboolib {
     }
     version {
         taboolib = "6.2.3"
-        coroutines = "1.10.1"
+        //coroutines = "1.10.1"
     }
 }
 
 repositories {
+    maven { url = uri("https://repo.codemc.io/repository/maven-releases/") }
     mavenCentral()
 }
 
 dependencies {
     compileOnly("ink.ptms.core:v12004:12004:mapped")
     compileOnly("ink.ptms.core:v12004:12004:universal")
+    /** 发光工具 **/
+    compileOnly("com.github.retrooper:packetevents-spigot:2.7.0")
+    compileOnly("ink.ptms:nms-all:1.0.0")
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("libs"))
 }
