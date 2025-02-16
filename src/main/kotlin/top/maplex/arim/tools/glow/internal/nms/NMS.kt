@@ -1,10 +1,9 @@
-package top.maplex.arim.glow.internal.nms
+package top.maplex.arim.tools.glow.internal.nms
 
 import org.bukkit.Location
 import org.bukkit.entity.Entity
 import taboolib.common.util.unsafeLazy
 import taboolib.module.nms.nmsProxy
-import java.util.*
 
 /**
  * TiatGlowAPIKT

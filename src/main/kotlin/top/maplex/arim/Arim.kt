@@ -1,6 +1,6 @@
 package top.maplex.arim
 
-import top.maplex.arim.glow.api.IGlow
+import top.maplex.arim.tools.glow.api.IGlow
 import top.maplex.arim.tools.conditionevaluator.ConditionEvaluator
 import top.maplex.arim.tools.fixedcalculator.FixedCalculator
 import top.maplex.arim.tools.itemmatch.ItemMatch

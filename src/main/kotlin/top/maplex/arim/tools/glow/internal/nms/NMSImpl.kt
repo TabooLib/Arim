@@ -1,4 +1,4 @@
-package top.maplex.arim.glow.internal.nms
+package top.maplex.arim.tools.glow.internal.nms
 
 import org.bukkit.Location
 import taboolib.common.platform.function.warning

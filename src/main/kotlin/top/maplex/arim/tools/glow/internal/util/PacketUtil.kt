@@ -1,4 +1,4 @@
-package top.maplex.arim.glow.internal.util
+package top.maplex.arim.tools.glow.internal.util
 
 import com.github.retrooper.packetevents.PacketEvents
 import com.github.retrooper.packetevents.protocol.entity.data.EntityData
@@ -9,7 +9,7 @@ import com.github.retrooper.packetevents.util.Vector3i
 import com.github.retrooper.packetevents.wrapper.play.server.*
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerTeams.ScoreBoardTeamInfo
 import io.github.retrooper.packetevents.util.SpigotReflectionUtil
-import top.maplex.arim.glow.internal.nms.NMS
+import top.maplex.arim.tools.glow.internal.nms.NMS
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.ChatColor

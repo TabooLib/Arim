@@ -1,4 +1,4 @@
-package top.maplex.arim.glow.internal.pojo
+package top.maplex.arim.tools.glow.internal.pojo
 
 import net.kyori.adventure.text.format.NamedTextColor
 

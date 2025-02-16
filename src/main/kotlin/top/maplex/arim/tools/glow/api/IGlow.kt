@@ -1,7 +1,7 @@
-package top.maplex.arim.glow.api
+package top.maplex.arim.tools.glow.api
 
-import top.maplex.arim.glow.internal.manager.GlowManager
-import top.maplex.arim.glow.internal.pojo.BlockGlowMode
+import top.maplex.arim.tools.glow.internal.manager.GlowManager
+import top.maplex.arim.tools.glow.internal.pojo.BlockGlowMode
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.block.Block
 import org.bukkit.entity.Entity
