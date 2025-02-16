@@ -24,7 +24,7 @@ repositories {
 
 ```kts
 dependencies {
-    taboo("com.github.FxRayHughes:Arim:Tag")
+    taboo("com.github.FxRayHughes:Arim:VERSION") // 替换为上方标签中的版本
 }
 ```
 
