@@ -1,8 +1,8 @@
 package top.maplex.arim
 
-import top.maplex.arim.tools.glow.api.IGlow
 import top.maplex.arim.tools.conditionevaluator.ConditionEvaluator
 import top.maplex.arim.tools.fixedcalculator.FixedCalculator
+import top.maplex.arim.tools.glow.api.IGlow
 import top.maplex.arim.tools.itemmatch.ItemMatch
 import top.maplex.arim.tools.variablecalculator.VariableCalculator
 
@@ -56,4 +56,10 @@ object Arim {
      * 可用版本: 根据不同模式, 见[top.maplex.arim.tools.glow.internal.pojo.BlockGlowMode]
      */
     val glow by lazy { IGlow() }
+
+    /**
+     *  文件夹读取器
+     *  请使用拓展函数作为入口
+     */
+    val folderReader = null
 }
