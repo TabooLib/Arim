@@ -11,7 +11,6 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import taboolib.common.platform.event.EventPriority
-import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.registerBukkitListener
 import taboolib.common.platform.function.warning
 import taboolib.common.util.t
@@ -100,8 +99,8 @@ class GlowManager {
                     else {
                         warning(
                             """
-                                Unsupported version: ${MinecraftVersion.versionId}
                                 不支持的版本: ${MinecraftVersion.versionId}
+                                Unsupported version: ${MinecraftVersion.versionId}
                             """.t()
                         )
                         return
@@ -132,9 +131,9 @@ class GlowManager {
                         else {
                             warning(
                                 """
-                                Unsupported version: ${MinecraftVersion.versionId}
-                                不支持的版本: ${MinecraftVersion.versionId}
-                            """.t()
+                                    不支持的版本: ${MinecraftVersion.versionId}
+                                    Unsupported version: ${MinecraftVersion.versionId}
+                                """.t()
                             )
                             return
                         }
