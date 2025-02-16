@@ -103,62 +103,6 @@ class NMSImpl: NMS() {
         return dataWatcher.invokeMethod<Byte>("get", entitySharedFlagsID)
     }
 
-    override fun spawnDummyEntityFallingBlockOn(location: Location): Pair<Int, UUID>? {
-        if (!MinecraftVersion.isUniversal) {
-            //目前只支持1.12.2 1.16.5
-            when (MinecraftVersion.versionId) {
-                11202 -> {
-                    val fallingBlock = NMS12R1LegacyEntityFallingBlock((location.world as NMS12R1LegacyCraftWorld).handle)
-                    return Pair(fallingBlock.id, fallingBlock.uniqueID)
-                }
-                11604 -> {
-                    val fallingBlock = NMS16R3LegacyEntityFallingBlock(NMS16R3LegacyEntityTypes.FALLING_BLOCK, (location.world as NMS16R3LegacyCraftWorld).handle)
-                    return Pair(fallingBlock.id, fallingBlock.uniqueID)
-                }
-                else -> {
-                    warning(
-                        """
-                            Unsupported version: ${MinecraftVersion.versionId}
-                            不支持的版本: ${MinecraftVersion.versionId}
-                        """.t()
-                    )
-                    return null
-                }
-            }
-        } else {
-            val fallingBlock = NMSUniversalEntityFallingBlock(NMSUniversalEntityTypes.FALLING_BLOCK, (location.world as NMSUniversalCraftWorld).handle)
-            return Pair(fallingBlock.id, fallingBlock.uuid)
-        }
-    }
-
-    override fun spawnDummyEntityShulkerOn(location: Location): Pair<Int, UUID>? {
-        if (!MinecraftVersion.isUniversal) {
-            //目前只支持1.12.2 1.16.5
-            when (MinecraftVersion.versionId) {
-                11202 -> {
-                    val shulker = NMS12R1LegacyEntityShulker((location.world as NMS12R1LegacyCraftWorld).handle)
-                    return Pair(shulker.id, shulker.uniqueID)
-                }
-                11604 -> {
-                    val shulker = NMS16R3LegacyEntityShulker(NMS16R3LegacyEntityTypes.SHULKER, (location.world as NMS16R3LegacyCraftWorld).handle)
-                    return Pair(shulker.id, shulker.uniqueID)
-                }
-                else -> {
-                    warning(
-                        """
-                            Unsupported version: ${MinecraftVersion.versionId}
-                            不支持的版本: ${MinecraftVersion.versionId}
-                        """.t()
-                    )
-                    return null
-                }
-            }
-        } else {
-            val shulker = NMSUniversalEntityShulker(NMSUniversalEntityTypes.SHULKER, (location.world as NMSUniversalCraftWorld).handle)
-            return Pair(shulker.id, shulker.uuid)
-        }
-    }
-
     override fun getCombinedID(location: Location): Int? {
         if (!MinecraftVersion.isUniversal) {
             when (MinecraftVersion.versionId) {
