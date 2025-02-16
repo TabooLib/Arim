@@ -1,12 +1,11 @@
 package top.maplex.arim.tools.glow.api
 
-import top.maplex.arim.tools.glow.internal.manager.GlowManager
-import top.maplex.arim.tools.glow.internal.pojo.BlockGlowMode
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.block.Block
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
-import taboolib.common.util.unsafeLazy
+import top.maplex.arim.tools.glow.internal.manager.GlowManager
+import top.maplex.arim.tools.glow.internal.pojo.BlockGlowMode
 
 /**
  * TiatGlowAPIKT
