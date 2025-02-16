@@ -44,5 +44,11 @@ object Arim {
      *  文件夹读取器
      *  请使用拓展函数作为入口
      */
-    val folderReader = null
+    val folderReader = {}
+
+    /**
+     *  TabooLib5 风格命令帮助
+     *  请使用拓展函数作为入口
+     */
+    val tabooLegacyStyleCommandHelper = {}
 }
