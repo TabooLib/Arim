@@ -1,6 +1,21 @@
 package top.maplex.arim.tools.glow.internal.manager
 
 import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes
+import net.kyori.adventure.text.format.NamedTextColor
+import org.bukkit.Location
+import org.bukkit.Material
+import org.bukkit.block.Block
+import org.bukkit.entity.Entity
+import org.bukkit.entity.Player
+import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.entity.PlayerDeathEvent
+import org.bukkit.event.player.PlayerQuitEvent
+import taboolib.common.platform.event.EventPriority
+import taboolib.common.platform.event.SubscribeEvent
+import taboolib.common.platform.function.registerBukkitListener
+import taboolib.common.platform.function.warning
+import taboolib.common.util.t
+import taboolib.module.nms.MinecraftVersion
 import top.maplex.arim.tools.glow.internal.nms.NMS
 import top.maplex.arim.tools.glow.internal.pojo.BlockGlowMode
 import top.maplex.arim.tools.glow.internal.pojo.GlowingBlockData
@@ -14,20 +29,6 @@ import top.maplex.arim.tools.glow.internal.util.PacketUtil.sendCreateDummyFallin
 import top.maplex.arim.tools.glow.internal.util.PacketUtil.sendEntityMetadataPacket
 import top.maplex.arim.tools.glow.internal.util.PacketUtil.sendRemoveDummyEntityShulker
 import top.maplex.arim.tools.glow.internal.util.PacketUtil.sendRemoveDummyFallingBlock
-import net.kyori.adventure.text.format.NamedTextColor
-import org.bukkit.Location
-import org.bukkit.Material
-import org.bukkit.block.Block
-import org.bukkit.entity.Entity
-import org.bukkit.entity.Player
-import org.bukkit.event.block.BlockBreakEvent
-import org.bukkit.event.entity.PlayerDeathEvent
-import org.bukkit.event.player.PlayerQuitEvent
-import taboolib.common.platform.event.EventPriority
-import taboolib.common.platform.event.SubscribeEvent
-import taboolib.common.platform.function.warning
-import taboolib.common.util.t
-import taboolib.module.nms.MinecraftVersion
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.experimental.and
@@ -41,6 +42,7 @@ import kotlin.experimental.or
 class GlowManager {
     /** 发光生物缓存 玩家 -> (EntityID -> 发光生物数据) **/
     private val glowingEntities: ConcurrentHashMap<Player, ConcurrentHashMap<Int, GlowingEntityData>> = ConcurrentHashMap()
+
     /** 玩家队伍 玩家 -> (队伍颜色 -> 队伍成员teamID)**/
     private val teams: ConcurrentHashMap<Player, ConcurrentHashMap<NamedTextColor, CopyOnWriteArraySet<String>>> = ConcurrentHashMap()
 
@@ -105,9 +107,11 @@ class GlowManager {
                         return
                     }
                 }
+
                 BlockGlowMode.CLASSIC_11200_11605_UNIVERSAL -> receiver.sendCreateDummyEntityShulkerOn(spawnLocation)
             } ?: return
-            glowingBlocks.computeIfAbsent(receiver){ ConcurrentHashMap() }[block] = GlowingBlockData(pair.first, pair.second, color, mode, block.location, NMS.INSTANCE.getCombinedID(block.location)!!)
+            glowingBlocks.computeIfAbsent(receiver) { ConcurrentHashMap() }[block] =
+                GlowingBlockData(pair.first, pair.second, color, mode, block.location, NMS.INSTANCE.getCombinedID(block.location)!!)
             setEntityGlowing0(pair.first, pair.second, receiver, color, invisibleFlag)
         } else {
             //如果存在方块数据
@@ -135,9 +139,10 @@ class GlowManager {
                             return
                         }
                     }
+
                     BlockGlowMode.CLASSIC_11200_11605_UNIVERSAL -> receiver.sendCreateDummyEntityShulkerOn(spawnLocation)
                 }
-                glowingBlocks[receiver]!![block] = GlowingBlockData(pair.first, pair.second, color, mode,  block.location, NMS.INSTANCE.getCombinedID(block.location)!!)
+                glowingBlocks[receiver]!![block] = GlowingBlockData(pair.first, pair.second, color, mode, block.location, NMS.INSTANCE.getCombinedID(block.location)!!)
                 setEntityGlowing0(pair.first, pair.second, receiver, color, invisibleFlag)
             }
         }
@@ -176,7 +181,7 @@ class GlowManager {
             //判断颜色是否为null，如果是则直接返回
             if (color == null) return
             //创建发光效果并更新颜色
-            glowingEntities.computeIfAbsent(receiver){ ConcurrentHashMap() }[entityID] = GlowingEntityData(teamID, color, otherSharedFlags)
+            glowingEntities.computeIfAbsent(receiver) { ConcurrentHashMap() }[entityID] = GlowingEntityData(teamID, color, otherSharedFlags)
             receiver.createGlowing(entityID)
             //存在玩家数据
         } else {
@@ -234,10 +239,10 @@ class GlowManager {
         if (sendCreation) {
             this.sendColorBasedTeamCreatePacket(data.color)
             this.sendColorBasedTeamEntityAddPacket(data.teamID, data.color)
-            teams.computeIfAbsent(this){ ConcurrentHashMap() }.computeIfAbsent(data.color) { CopyOnWriteArraySet() }.add(data.teamID)
+            teams.computeIfAbsent(this) { ConcurrentHashMap() }.computeIfAbsent(data.color) { CopyOnWriteArraySet() }.add(data.teamID)
         } else {
             this.sendColorBasedTeamEntityAddPacket(data.teamID, data.color)
-            teams.computeIfAbsent(this){ ConcurrentHashMap() }.computeIfAbsent(data.color) { CopyOnWriteArraySet() }.add(data.teamID)
+            teams.computeIfAbsent(this) { ConcurrentHashMap() }.computeIfAbsent(data.color) { CopyOnWriteArraySet() }.add(data.teamID)
         }
     }
 
@@ -263,36 +268,33 @@ class GlowManager {
      * 创建占位FallingBlock实体
      */
     private fun Player.createDummyFallingBlock(location: Location): Pair<Int, String>? {
-        val pair =  this.sendCreateDummyFallingBlockOn(location) ?: return null
+        val pair = this.sendCreateDummyFallingBlockOn(location) ?: return null
         //额外设置无重力
         this.sendEntityMetadataPacket(pair.first, 5, EntityDataTypes.BOOLEAN, listOf(true))
 
         return Pair(pair.first, pair.second)
     }
 
-    @SubscribeEvent
-    private fun onPlayerQuit(event: PlayerQuitEvent) {
-        //注销玩家
-        glowingEntities.remove(event.player)
-        teams.remove(event.player)
-        glowingBlocks.remove(event.player)
-    }
+    init {
+        registerBukkitListener(PlayerQuitEvent::class.java) { event ->
+            glowingEntities.remove(event.player)
+            teams.remove(event.player)
+            glowingBlocks.remove(event.player)
+        }
 
-    @SubscribeEvent
-    private fun onPlayerDeath(event: PlayerDeathEvent) {
-        //注销玩家
-        glowingEntities.remove(event.entity)
-        teams.remove(event.entity)
-        glowingBlocks.remove(event.entity)
-    }
+        /**
+         * 方块被打破时注销发光
+         * 此事件在发光模式为STYLE时不会被触发
+         */
+        registerBukkitListener(BlockBreakEvent::class.java, EventPriority.MONITOR) { event ->
+            if (glowingBlocks[event.player]?.get(event.block) == null) return@registerBukkitListener
+            unsetBlockGlowing(event.block, event.player)
+        }
 
-    /**
-     * 方块被打破时注销发光
-     * 此事件在发光模式为STYLE时不会被触发
-     */
-    @SubscribeEvent(EventPriority.MONITOR)
-    private fun onBlockBreak(event: BlockBreakEvent) {
-        if (glowingBlocks[event.player]?.get(event.block) == null) return
-        unsetBlockGlowing(event.block, event.player)
+        registerBukkitListener(PlayerDeathEvent::class.java) { event ->
+            glowingEntities.remove(event.entity)
+            teams.remove(event.entity)
+            glowingBlocks.remove(event.entity)
+        }
     }
 }

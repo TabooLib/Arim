@@ -14,6 +14,9 @@ import taboolib.common.util.unsafeLazy
  * @since 2025/01/28
  **/
 class IGlow {
+
+    val INSTANCE = GlowManager()
+
     /**
      * 设置/取消生物发光
      * @param entity 目标
@@ -35,11 +38,5 @@ class IGlow {
     fun setGlowing(block: Block, receiver: Player, color: NamedTextColor?, mode: BlockGlowMode) {
         if (color != null) INSTANCE.setBlockGlowing(block, receiver, color, mode)
         else INSTANCE.unsetBlockGlowing(block, receiver)
-    }
-
-    companion object {
-        val INSTANCE: GlowManager by unsafeLazy {
-            GlowManager()
-        }
     }
 }
