@@ -1,6 +1,7 @@
 package top.maplex.arim
 
 import top.maplex.arim.tools.conditionevaluator.ConditionEvaluator
+import top.maplex.arim.tools.entitymatch.EntityMatch
 import top.maplex.arim.tools.fixedcalculator.FixedCalculator
 import top.maplex.arim.tools.glow.api.IGlow
 import top.maplex.arim.tools.itemmatch.ItemMatch
@@ -29,8 +30,15 @@ object Arim {
      */
     val variableCalculator by lazy { VariableCalculator() }
 
-
+    /**
+     * 物品匹配工具
+     */
     val itemMatch by lazy { ItemMatch() }
+
+    /**
+     * 实体匹配工具
+     */
+    val entityMatch by lazy { EntityMatch() }
 
     /**
      * 生物&方块发光工具
