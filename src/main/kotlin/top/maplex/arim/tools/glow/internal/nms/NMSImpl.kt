@@ -7,28 +7,12 @@ import taboolib.common.util.unsafeLazy
 import taboolib.library.reflex.Reflex.Companion.getProperty
 import taboolib.library.reflex.Reflex.Companion.invokeMethod
 import taboolib.module.nms.MinecraftVersion
-import java.util.*
 
 typealias NMSLegacyEntity = net.minecraft.server.v1_12_R1.Entity
 typealias NMSUniversalEntity = net.minecraft.world.entity.Entity
 
 typealias NMSLegacyDataWatcherObjectByte = net.minecraft.server.v1_12_R1.DataWatcherObject<Byte>
 typealias NMSUniversalDataWatcherObjectByte = net.minecraft.network.syncher.DataWatcherObject<Byte>
-
-typealias NMS12R1LegacyEntityFallingBlock = net.minecraft.server.v1_12_R1.EntityFallingBlock
-typealias NMS16R3LegacyEntityFallingBlock = net.minecraft.server.v1_16_R3.EntityFallingBlock
-typealias NMSUniversalEntityFallingBlock = net.minecraft.world.entity.item.EntityFallingBlock
-
-typealias NMS12R1LegacyEntityShulker = net.minecraft.server.v1_12_R1.EntityShulker
-typealias NMS16R3LegacyEntityShulker = net.minecraft.server.v1_16_R3.EntityShulker
-typealias NMSUniversalEntityShulker = net.minecraft.world.entity.monster.EntityShulker
-
-typealias NMS16R3LegacyEntityTypes = net.minecraft.server.v1_16_R3.EntityTypes<*>
-typealias NMSUniversalEntityTypes = net.minecraft.world.entity.EntityTypes<*>
-
-typealias NMS12R1LegacyCraftWorld = org.bukkit.craftbukkit.v1_12_R1.CraftWorld
-typealias NMS16R3LegacyCraftWorld = org.bukkit.craftbukkit.v1_16_R3.CraftWorld
-typealias NMSUniversalCraftWorld = org.bukkit.craftbukkit.v1_20_R3.CraftWorld
 
 typealias NMSLegacyDataWatcher = net.minecraft.server.v1_12_R1.DataWatcher
 typealias NMSUniversalDataWatcher = net.minecraft.network.syncher.DataWatcher
@@ -62,8 +46,8 @@ class NMSImpl: NMS() {
                 else -> {
                     warning(
                         """
-                            Unsupported version: ${MinecraftVersion.versionId}
                             不支持的版本: ${MinecraftVersion.versionId}
+                            Unsupported version: ${MinecraftVersion.versionId}
                         """.t()
                     )
                     null
@@ -78,8 +62,8 @@ class NMSImpl: NMS() {
         if (entitySharedFlagsID == null) {
             warning(
                 """
-                    Unsupported version: ${MinecraftVersion.versionId}
                     不支持的版本: ${MinecraftVersion.versionId}
+                    Unsupported version: ${MinecraftVersion.versionId}
                 """.t()
             )
             return null
@@ -93,8 +77,8 @@ class NMSImpl: NMS() {
         if (dataWatcher == null) {
             warning(
                 """
-                    Unsupported version: ${MinecraftVersion.versionId}
                     不支持的版本: ${MinecraftVersion.versionId}
+                    Unsupported version: ${MinecraftVersion.versionId}
                 """.t()
             )
             return null
@@ -123,8 +107,8 @@ class NMSImpl: NMS() {
                 else -> {
                     warning(
                         """
-                            Unsupported version: ${MinecraftVersion.versionId}
                             不支持的版本: ${MinecraftVersion.versionId}
+                            Unsupported version: ${MinecraftVersion.versionId}
                         """.t()
                     )
                     return null

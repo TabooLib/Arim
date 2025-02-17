@@ -9,7 +9,6 @@ import com.github.retrooper.packetevents.util.Vector3i
 import com.github.retrooper.packetevents.wrapper.play.server.*
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerTeams.ScoreBoardTeamInfo
 import io.github.retrooper.packetevents.util.SpigotReflectionUtil
-import top.maplex.arim.tools.glow.internal.nms.NMS
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.ChatColor
@@ -19,6 +18,7 @@ import taboolib.common.platform.function.warning
 import taboolib.common.util.t
 import taboolib.module.nms.MinecraftVersion
 import taboolib.module.nms.MinecraftVersion.V1_19
+import top.maplex.arim.tools.glow.internal.nms.NMS
 import java.util.*
 
 /**
