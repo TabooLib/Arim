@@ -1,9 +1,11 @@
 package top.maplex.arim.tools.itemmatch.model
 
-sealed class MatchCondition {
+sealed class MatchCondition(
+    var modifiers: List<String> = emptyList()
+) {
     data class StringCondition(
         val operation: StringOperation,
-        val values: List<String>
+        var values: List<String>
     ) : MatchCondition()
 
     data class NumberCondition(

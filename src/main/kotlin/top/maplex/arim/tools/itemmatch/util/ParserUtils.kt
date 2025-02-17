@@ -1,5 +1,6 @@
 package top.maplex.arim.tools.itemmatch.util
 
+import taboolib.module.chat.uncolored
 import top.maplex.arim.tools.itemmatch.model.CompoundType
 import top.maplex.arim.tools.itemmatch.model.MatchCondition
 import top.maplex.arim.tools.itemmatch.model.NumberOperator
@@ -36,19 +37,28 @@ object ParserUtils {
     }
 
     fun parseStringCondition(value: String): MatchCondition.StringCondition {
-        val pattern = Regex("""(\w+)\((.*)\)""")
-        val match = pattern.matchEntire(value) ?: return MatchCondition.StringCondition(
-            EXACT,
-            listOf(value)
-        )
+        val pattern = Regex("""(\w+)(?:\[([^]]+)])?\((.*)\)""")
+        val match = pattern.matchEntire(value) ?: return MatchCondition.StringCondition(EXACT, listOf(value))
 
-        val values = match.groupValues[2].split('|').map { it.trim().removeSurrounding("\"") }
-        return when (match.groupValues[1].lowercase()) {
+        val operationPart = match.groupValues[1].lowercase()
+        // 提取修饰符（可选部分）
+        val modifiers = match.groupValues[2].takeIf { it.isNotEmpty() }
+        var values = match.groupValues[3].split('|').map { it.trim().removeSurrounding("\"") }
+
+        return when (operationPart) {
             "contains", "con", "c" -> MatchCondition.StringCondition(StringOperation.CONTAINS, values)
             "regex", "reg", "r" -> MatchCondition.StringCondition(StringOperation.REGEX, values)
             "startswith", "start", "s" -> MatchCondition.StringCondition(StringOperation.STARTS_WITH, values)
             "endswith", "end", "e" -> MatchCondition.StringCondition(StringOperation.ENDS_WITH, values)
             else -> MatchCondition.StringCondition(EXACT, values)
+        }.also {
+            modifiers?.let { modifier ->
+                val conf = modifier.lowercase().split(',')
+                it.modifiers = conf
+                if ("uncolored" in conf || "uc" in conf) {
+                    values = values.map { it.uncolored() }
+                }
+            }
         }
     }
 

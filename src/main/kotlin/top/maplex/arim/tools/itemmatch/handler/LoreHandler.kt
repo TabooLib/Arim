@@ -1,6 +1,7 @@
 package top.maplex.arim.tools.itemmatch.handler
 
 import org.bukkit.inventory.ItemStack
+import taboolib.module.chat.uncolored
 import top.maplex.arim.tools.itemmatch.model.CompoundType
 import top.maplex.arim.tools.itemmatch.model.MatchCondition
 import top.maplex.arim.tools.itemmatch.model.StringOperation.*
@@ -20,7 +21,14 @@ class LoreHandler : ItemHandler {
         }
     }
 
-    private fun checkStringCondition(lore: List<String>, condition: MatchCondition.StringCondition): Boolean {
+    private fun checkStringCondition(stringList: List<String>, condition: MatchCondition.StringCondition): Boolean {
+        var lore = stringList
+        if (condition.modifiers.containsAll(listOf("uncolored", "uc"))) {
+            lore = lore.uncolored()
+        }
+        if (condition.modifiers.containsAll(listOf("lowercase", "lc"))) {
+            lore = lore.map { it.lowercase() }
+        }
         return when (condition.operation) {
             EXACT -> lore == condition.values
             CONTAINS -> {

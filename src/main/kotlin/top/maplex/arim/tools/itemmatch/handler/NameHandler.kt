@@ -30,7 +30,14 @@ class NameHandler : ItemHandler {
         }
     }
 
-    private fun checkStringCondition(displayName: String, condition: MatchCondition.StringCondition): Boolean {
+    private fun checkStringCondition(string: String, condition: MatchCondition.StringCondition): Boolean {
+        var displayName = string
+        if (condition.modifiers.containsAll(listOf("uncolored", "uc"))) {
+            displayName = displayName.uncolored()
+        }
+        if (condition.modifiers.containsAll(listOf("lowercase", "lc"))) {
+            displayName = displayName.lowercase()
+        }
         return when (condition.operation) {
             StringOperation.EXACT -> displayName == condition.values.first()
             StringOperation.CONTAINS -> condition.values.any { displayName.contains(it, true) }
