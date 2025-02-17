@@ -68,6 +68,9 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             from(components.findByName("java"))
+//            artifactId = "Arim"
+//            groupId = "top.maplex.arim"
+            version = project.version.toString()
         }
     }
 }
