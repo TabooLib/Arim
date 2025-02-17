@@ -1,5 +1,7 @@
 package top.maplex.arim.tools.entitymatch.handler
 
+import ink.ptms.adyeshach.core.entity.type.AdyEntity
+import ink.ptms.adyeshach.module.command.getName
 import org.bukkit.entity.Entity
 import org.bukkit.entity.LivingEntity
 import taboolib.common.platform.function.info
@@ -14,6 +16,22 @@ import top.maplex.arim.tools.entitymatch.util.ParserUtils
 class NameHandler: EntityHandler {
     override fun check(entity: LivingEntity, value: String): Boolean {
         val entityName = entity.customName ?: entity.getI18nName()
+        return when (val condition = ParserUtils.parseListCondition(value)) {
+            is MatchCondition.StringCondition -> {
+                checkStringCondition(entityName, condition)
+            }
+            is MatchCondition.CompoundCondition -> {
+                when (condition.type) {
+                    CompoundType.ANY -> condition.conditions.any { checkStringCondition(entityName, it as MatchCondition.StringCondition) }
+                    CompoundType.ALL -> condition.conditions.all { checkStringCondition(entityName, it as MatchCondition.StringCondition) }
+                    CompoundType.NONE -> condition.conditions.none { checkStringCondition(entityName, it as MatchCondition.StringCondition) }
+                }
+            }
+            else -> false
+        }
+    }
+    override fun check(entity: AdyEntity, value: String): Boolean {
+        val entityName = entity.getName()
         return when (val condition = ParserUtils.parseListCondition(value)) {
             is MatchCondition.StringCondition -> {
                 checkStringCondition(entityName, condition)

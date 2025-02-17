@@ -1,5 +1,6 @@
 package top.maplex.arim.tools.entitymatch.handler
 
+import ink.ptms.adyeshach.core.entity.type.AdyEntity
 import org.bukkit.entity.LivingEntity
 import top.maplex.arim.tools.entitymatch.model.NumberOperator
 import top.maplex.arim.tools.entitymatch.util.ParserUtils
@@ -15,5 +16,9 @@ class HealthHandler : EntityHandler {
             NumberOperator.LESS -> health < condition.value
             else -> health == condition.value
         }
+    }
+
+    override fun check(entity: AdyEntity, value: String): Boolean {
+        return false
     }
 }
