@@ -84,31 +84,6 @@ object ParserUtils {
             else -> parseStringCondition(value)
         }
     }
-
-    fun parseNumberListCondition(value: String): MatchCondition {
-        return when {
-            value.startsWith("any(") || value.startsWith("all(") || value.startsWith("none(") -> {
-                val type = when {
-                    value.startsWith("any") -> CompoundType.ANY
-                    value.startsWith("all") -> CompoundType.ALL
-                    value.startsWith("none") -> CompoundType.NONE
-                    value.startsWith("not") -> CompoundType.NONE
-                    else -> CompoundType.NONE
-                }
-                // lore:any(contains(b),startsWith(a),regex(^1-9))
-                val args = value.substringAfter("(").substringBeforeLast(')')
-                    .split(',')
-                    .map { it.trim().removeSurrounding("\"") }
-                if (args.isEmpty()) return MatchCondition.StringCondition(EXACT, emptyList())
-                MatchCondition.CompoundCondition(type, args.map {
-                    parseNumberCondition(it)
-                })
-            }
-
-            else -> parseNumberCondition(value)
-        }
-    }
-
     fun parseNumberCondition(value: String): MatchCondition.NumberCondition {
         // 新正则表达式：捕获[前缀][操作符][数值]三部分
         val pattern = Regex("""^(\w+?)?(>=|<=|>|<|=)?(\d+)$""")
