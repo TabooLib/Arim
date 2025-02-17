@@ -71,6 +71,10 @@ publishing {
 //            artifactId = "Arim"
 //            groupId = "top.maplex.arim"
             version = project.version.toString()
+            println("Publishing version $version")
+            println("Publishing artifactId $artifactId")
+            println("Publishing groupId $groupId")
+
         }
     }
 }
