@@ -1,8 +1,9 @@
 package top.maplex.arim.tools.weightrandom
 
 import taboolib.common.util.random
+import top.maplex.arim.Arim
 
-object WeightRandom {
+class WeightRandom {
 
     fun <T> getWeightRandom(categories: Collection<WeightCategory<T>>): T? {
         return getRandom(categories)?.category
@@ -42,9 +43,9 @@ object WeightRandom {
 }
 
 fun <T> Collection<T>.randomWeight(processing: (T) -> Int): WeightRandom.WeightCategory<T>? {
-    return WeightRandom.getRandom(this, processing)
+    return Arim.weightRandom.getRandom(this, processing)
 }
 
 fun <T> Collection<T>.randomWeightValue(processing: (T) -> Int): T? {
-    return WeightRandom.getRandom(this, processing)?.category
+    return Arim.weightRandom.getRandom(this, processing)?.category
 }

@@ -56,6 +56,6 @@ object Arim {
     /**
      *  权重随机工具
      */
-    val weightRandom = WeightRandom
+    val weightRandom by lazy {  WeightRandom() }
 
 }
