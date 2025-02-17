@@ -7,20 +7,14 @@ import top.maplex.arim.tools.entitymatch.util.ParserUtils
 
 class TypeHandler: EntityHandler {
     override fun check(entity: LivingEntity, value: String): Boolean {
-        val entityType = entity.type.name
-        val condition = ParserUtils.parseStringCondition(value)
-        return when (condition.operation) {
-            StringOperation.EXACT -> condition.values.any { entityType.equals(it, true) }
-            StringOperation.CONTAINS -> condition.values.any { entityType.contains(it, true) }
-            StringOperation.REGEX -> condition.values.any {
-                Regex(it, RegexOption.IGNORE_CASE).containsMatchIn(entityType)
-            }
-            StringOperation.STARTS_WITH -> condition.values.any { entityType.startsWith(it, true) }
-            StringOperation.ENDS_WITH -> condition.values.any { entityType.endsWith(it, true) }
-        }
+        return condition(entity.type.name, value)
     }
+
     override fun check(entity: AdyEntity, value: String): Boolean {
-        val entityType = entity.entityType.name
+        return condition(entity.entityType.name, value)
+    }
+
+    fun condition(entityType: String, value: String): Boolean {
         val condition = ParserUtils.parseStringCondition(value)
         return when (condition.operation) {
             StringOperation.EXACT -> condition.values.any { entityType.equals(it, true) }
@@ -28,6 +22,7 @@ class TypeHandler: EntityHandler {
             StringOperation.REGEX -> condition.values.any {
                 Regex(it, RegexOption.IGNORE_CASE).containsMatchIn(entityType)
             }
+
             StringOperation.STARTS_WITH -> condition.values.any { entityType.startsWith(it, true) }
             StringOperation.ENDS_WITH -> condition.values.any { entityType.endsWith(it, true) }
         }

@@ -15,45 +15,30 @@ import top.maplex.arim.tools.entitymatch.util.ParserUtils
 
 class NameHandler: EntityHandler {
     override fun check(entity: LivingEntity, value: String): Boolean {
-        val entityName = entity.customName ?: entity.getI18nName()
-        return when (val condition = ParserUtils.parseListCondition(value)) {
-            is MatchCondition.StringCondition -> {
-                checkStringCondition(entityName, condition)
-            }
-            is MatchCondition.CompoundCondition -> {
-                when (condition.type) {
-                    CompoundType.ANY -> condition.conditions.any { checkStringCondition(entityName, it as MatchCondition.StringCondition) }
-                    CompoundType.ALL -> condition.conditions.all { checkStringCondition(entityName, it as MatchCondition.StringCondition) }
-                    CompoundType.NONE -> condition.conditions.none { checkStringCondition(entityName, it as MatchCondition.StringCondition) }
-                }
-            }
-            else -> false
-        }
+        return checkEntity(entity.customName ?: entity.getI18nName(), value)
     }
+
     override fun check(entity: AdyEntity, value: String): Boolean {
-        val entityName = entity.getName()
+        return checkEntity(entity.getName(), value)
+    }
+
+    private fun checkEntity(entityName: String, value: String): Boolean {
         return when (val condition = ParserUtils.parseListCondition(value)) {
-            is MatchCondition.StringCondition -> {
-                checkStringCondition(entityName, condition)
-            }
-            is MatchCondition.CompoundCondition -> {
-                when (condition.type) {
-                    CompoundType.ANY -> condition.conditions.any { checkStringCondition(entityName, it as MatchCondition.StringCondition) }
-                    CompoundType.ALL -> condition.conditions.all { checkStringCondition(entityName, it as MatchCondition.StringCondition) }
-                    CompoundType.NONE -> condition.conditions.none { checkStringCondition(entityName, it as MatchCondition.StringCondition) }
-                }
+            is MatchCondition.StringCondition -> checkStringCondition(entityName, condition)
+            is MatchCondition.CompoundCondition -> when (condition.type) {
+                CompoundType.ANY -> condition.conditions.any { checkStringCondition(entityName, it as MatchCondition.StringCondition) }
+                CompoundType.ALL -> condition.conditions.all { checkStringCondition(entityName, it as MatchCondition.StringCondition) }
+                CompoundType.NONE -> condition.conditions.none { checkStringCondition(entityName, it as MatchCondition.StringCondition) }
             }
             else -> false
         }
     }
+
     private fun checkStringCondition(string: String, condition: MatchCondition.StringCondition): Boolean {
-        var entityName = string
-        if (condition.modifiers.containsAll(listOf("uncolored", "uc"))) {
-            entityName = entityName.uncolored()
-        }
-        if (condition.modifiers.containsAll(listOf("lowercase", "lc"))) {
-            entityName = entityName.lowercase()
-        }
+        val entityName = string
+            .let { if (condition.modifiers.contains("uncolored") || condition.modifiers.contains("uc")) it.uncolored() else it }
+            .let { if (condition.modifiers.contains("lowercase") || condition.modifiers.contains("lc")) it.lowercase() else it }
+
         return when (condition.operation) {
             StringOperation.EXACT -> entityName == condition.values.first()
             StringOperation.CONTAINS -> condition.values.any { entityName.contains(it, true) }
