@@ -5,6 +5,7 @@ import top.maplex.arim.tools.fixedcalculator.FixedCalculator
 import top.maplex.arim.tools.glow.api.IGlow
 import top.maplex.arim.tools.itemmatch.ItemMatch
 import top.maplex.arim.tools.variablecalculator.VariableCalculator
+import top.maplex.arim.tools.weightrandom.WeightRandom
 
 /**
  * Arim工具库
@@ -51,4 +52,10 @@ object Arim {
      *  请使用拓展函数作为入口
      */
     val tabooLegacyStyleCommandHelper = {}
+
+    /**
+     *  权重随机工具
+     */
+    val weightRandom = WeightRandom
+
 }
