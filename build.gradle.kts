@@ -32,7 +32,9 @@ dependencies {
     compileOnly("com.github.retrooper:packetevents-spigot:2.7.0")
     /** adyeshach  **/
     compileOnly("ink.ptms:adyeshach:2.0.4")
-
+    /** MythicMobs **/
+    compileOnly("ink.ptms:um:1.1.5")
+    /** NMS 工具 **/
     compileOnly("ink.ptms:nms-all:1.0.0")
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("libs"))

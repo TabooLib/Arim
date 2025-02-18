@@ -1,7 +1,7 @@
 package top.maplex.arim.tools.entitymatch.handler
 
-import ink.ptms.adyeshach.core.entity.type.AdyEntity
 import org.bukkit.entity.LivingEntity
+import top.maplex.arim.tools.entitymatch.hook.BaseAdyEntity
 import top.maplex.arim.tools.entitymatch.model.StringOperation
 import top.maplex.arim.tools.entitymatch.util.ParserUtils
 
@@ -10,7 +10,7 @@ class TypeHandler: EntityHandler {
         return condition(entity.type.name, value)
     }
 
-    override fun check(entity: AdyEntity, value: String): Boolean {
+    override fun check(entity: BaseAdyEntity, value: String): Boolean {
         return condition(entity.entityType.name, value)
     }
 

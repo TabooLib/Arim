@@ -1,10 +1,10 @@
 package top.maplex.arim.tools.entitymatch.handler
 
-import ink.ptms.adyeshach.core.entity.type.AdyEntity
 import org.bukkit.entity.LivingEntity
+import top.maplex.arim.tools.entitymatch.hook.BaseAdyEntity
 
 interface EntityHandler {
     fun check(entity: LivingEntity, value: String): Boolean
-    fun check(entity: AdyEntity, value: String): Boolean
+    fun check(entity: BaseAdyEntity, value: String): Boolean
 
 }

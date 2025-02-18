@@ -1,12 +1,9 @@
 package top.maplex.arim.tools.entitymatch.handler
 
-import ink.ptms.adyeshach.core.entity.type.AdyEntity
-import ink.ptms.adyeshach.module.command.getName
-import org.bukkit.entity.Entity
 import org.bukkit.entity.LivingEntity
-import taboolib.common.platform.function.info
 import taboolib.module.chat.uncolored
 import taboolib.module.nms.getI18nName
+import top.maplex.arim.tools.entitymatch.hook.BaseAdyEntity
 import top.maplex.arim.tools.entitymatch.model.CompoundType
 import top.maplex.arim.tools.entitymatch.model.MatchCondition
 import top.maplex.arim.tools.entitymatch.model.StringOperation
@@ -18,7 +15,7 @@ class NameHandler: EntityHandler {
         return checkEntity(entity.customName ?: entity.getI18nName(), value)
     }
 
-    override fun check(entity: AdyEntity, value: String): Boolean {
+    override fun check(entity: BaseAdyEntity, value: String): Boolean {
         return checkEntity(entity.getName(), value)
     }
 

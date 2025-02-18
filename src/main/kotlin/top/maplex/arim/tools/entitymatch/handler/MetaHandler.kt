@@ -1,8 +1,8 @@
 package top.maplex.arim.tools.entitymatch.handler
 
-import ink.ptms.adyeshach.core.entity.type.AdyEntity
 import org.bukkit.entity.LivingEntity
 import taboolib.platform.util.hasMeta
+import top.maplex.arim.tools.entitymatch.hook.BaseAdyEntity
 import top.maplex.arim.tools.itemmatch.util.ParserUtils
 
 class MetaHandler : EntityHandler {
@@ -10,7 +10,7 @@ class MetaHandler : EntityHandler {
         val key = condition(value) ?: return false
         return entity.hasMeta(key)
     }
-    override fun check(entity: AdyEntity, value: String): Boolean {
+    override fun check(entity: BaseAdyEntity, value: String): Boolean {
         val key = condition(value) ?: return false
         return entity.hasTag(key)
     }
