@@ -1,7 +1,7 @@
 package top.maplex.arim.tools.entitymatch.handler
 
 import org.bukkit.entity.LivingEntity
-import top.maplex.arim.tools.entitymatch.hook.BaseAdyEntity
+import top.maplex.arim.tools.entitymatch.hook.BaseEntityInstance
 import top.maplex.arim.tools.entitymatch.model.NumberOperator
 import top.maplex.arim.tools.entitymatch.util.ParserUtils
 
@@ -18,7 +18,7 @@ class HealthHandler : EntityHandler {
         }
     }
 
-    override fun check(entity: BaseAdyEntity, value: String): Boolean {
+    override fun check(entity: BaseEntityInstance, value: String): Boolean {
         return false
     }
 }
