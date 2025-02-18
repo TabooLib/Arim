@@ -24,6 +24,7 @@ import taboolib.common.platform.function.pluginId
 import taboolib.common.platform.function.pluginVersion
 import taboolib.common.util.Strings
 import taboolib.common.util.VariableReader
+import taboolib.library.reflex.Reflex.Companion.getProperty
 import taboolib.module.chat.component
 import taboolib.module.lang.asLangText
 import taboolib.module.lang.asLangTextList
@@ -101,7 +102,7 @@ fun CommandComponent.createTabooLegacyStyleCommandHelper(commandType: String = "
 
     if (this is CommandBase) {
         incorrectCommand { sender, ctx, _, state ->
-            val input = ctx.args().first()
+            val input = ctx.getProperty<Array<String>>("rawArgs")!!.first()
             val name = children.filterIsInstance<CommandComponentLiteral>()
                 .firstOrNull { it.aliases.contains(input) }?.aliases?.get(0) ?: input
             var usage = sender.asLangTextOrNull("$prefix-subCommands-$name-usage") ?: ""
