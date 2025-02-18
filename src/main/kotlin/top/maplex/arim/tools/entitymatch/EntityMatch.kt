@@ -1,5 +1,6 @@
 package top.maplex.arim.tools.entitymatch
 
+import org.bukkit.Bukkit
 import org.bukkit.entity.LivingEntity
 import taboolib.module.chat.colored
 import top.maplex.arim.tools.entitymatch.handler.*
@@ -29,8 +30,12 @@ class EntityMatch {
         registerHandler("type", TypeHandler())
         registerHandler("meta", MetaHandler())
         registerHandler("health", HealthHandler())
-        registerHandler("ady", AdyHandler())
-        registerHandler("mm", MMHandler())
+        if (Bukkit.getPluginManager().getPlugin("Adyeshach") != null) {
+            registerHandler("ady", AdyHandler())
+        }
+        if (Bukkit.getPluginManager().getPlugin("MythicMobs") != null) {
+            registerHandler("mm", MMHandler())
+        }
     }
 
     /**
