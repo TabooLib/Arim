@@ -1,5 +1,6 @@
 package top.maplex.arim
 
+import ink.ptms.um.Mythic
 import top.maplex.arim.tools.conditionevaluator.ConditionEvaluator
 import top.maplex.arim.tools.entitymatch.EntityMatch
 import top.maplex.arim.tools.fixedcalculator.FixedCalculator

@@ -84,6 +84,7 @@ object ParserUtils {
             else -> parseStringCondition(value)
         }
     }
+
     fun parseNumberCondition(value: String): MatchCondition.NumberCondition {
         // 新正则表达式：捕获[前缀][操作符][数值]三部分
         val pattern = Regex("""^(\w+?)?(>=|<=|>|<|=)?(\d+)$""")
