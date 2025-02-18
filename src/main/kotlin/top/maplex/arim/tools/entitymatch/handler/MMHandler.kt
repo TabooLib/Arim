@@ -9,9 +9,9 @@ import top.maplex.arim.tools.entitymatch.model.StringOperation
 import top.maplex.arim.tools.entitymatch.util.ParserUtils
 
 class MMHandler : EntityHandler {
+    private val mythic = Mythic.API
     override fun check(entity: LivingEntity, value: String): Boolean {
-        if (Mythic.API.getMob(entity) == null) return false
-        val entityID = Mythic.API.getMob(entity)?.id ?: return false
+        val entityID = mythic.getMob(entity)?.id ?: return false
         return checkEntity(entityID, value)
     }
 
