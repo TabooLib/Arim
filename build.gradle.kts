@@ -21,8 +21,8 @@ taboolib {
 }
 
 repositories {
-    maven { url = uri("https://repo.codemc.io/repository/maven-releases/") }
     mavenCentral()
+    maven { url = uri("https://repo.codemc.io/repository/maven-releases/") }
 }
 
 dependencies {
