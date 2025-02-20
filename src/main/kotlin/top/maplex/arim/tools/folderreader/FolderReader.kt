@@ -4,6 +4,7 @@ import taboolib.common.platform.function.getDataFolder
 import taboolib.common.platform.function.releaseResourceFolder
 import taboolib.module.configuration.Configuration
 import taboolib.module.configuration.Configuration.Companion.getTypeFromExtension
+import taboolib.module.configuration.Configuration.Companion.getTypeFromExtensionOrNull
 import taboolib.module.configuration.Configuration.Companion.loadFromFile
 import taboolib.module.configuration.Type
 import java.io.File
@@ -53,11 +54,12 @@ data class FolderReader(val file: File) {
     }
 
     fun walk(action: Configuration.() -> Unit) {
-        val walk = file.walk().filter { it.isFile }.filter { getTypeFromExtension(it.extension) in readTypes }
-        // from @xiaobai
-        walk.filter{file->
-            filter.all { it(file) }
-        }
+        val walk = file.walk()
+            .filter { it.isFile }
+            .filter { getTypeFromExtensionOrNull(it.extension) in readTypes }
+            // from @xiaobai
+            .filter { file -> filter.all { it(file) } }
+
         walk.forEach { inline ->
             loadFromFile(inline, getTypeFromExtension(inline.extension)).also(action)
         }
