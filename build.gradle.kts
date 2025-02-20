@@ -23,12 +23,14 @@ taboolib {
 repositories {
     mavenCentral()
     maven { url = uri("https://repo.codemc.io/repository/maven-releases/") }
+    mavenLocal()
 }
 
 dependencies {
     compileOnly("ink.ptms.core:v12004:12004:mapped")
     compileOnly("ink.ptms.core:v12004:12004:universal")
     /** 发光工具 **/
+    compileOnly("net.kyori:adventure-api:4.19.0")
     compileOnly("com.github.retrooper:packetevents-spigot:2.7.0")
     /** adyeshach  **/
     compileOnly("ink.ptms:adyeshach:2.0.4")
