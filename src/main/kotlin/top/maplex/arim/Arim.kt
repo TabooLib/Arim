@@ -5,6 +5,7 @@ import top.maplex.arim.tools.conditionevaluator.ConditionEvaluator
 import top.maplex.arim.tools.entitymatch.EntityMatch
 import top.maplex.arim.tools.fixedcalculator.FixedCalculator
 import top.maplex.arim.tools.glow.api.IGlow
+import top.maplex.arim.tools.itemmanager.ItemManager
 import top.maplex.arim.tools.itemmatch.ItemMatch
 import top.maplex.arim.tools.variablecalculator.VariableCalculator
 import top.maplex.arim.tools.weightrandom.WeightRandom
@@ -67,4 +68,5 @@ object Arim {
      */
     val weightRandom by lazy {  WeightRandom() }
 
+    val itemManager by lazy { ItemManager() }
 }
