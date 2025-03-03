@@ -23,6 +23,11 @@ taboolib {
 repositories {
     mavenCentral()
     maven { url = uri("https://repo.codemc.io/repository/maven-releases/") }
+    maven("https://jitpack.io") // ItemsAdder
+    maven("https://r.irepo.space/maven/") // NeigeItems
+    maven("https://nexus.phoenixdevt.fr/repository/maven-public/") // MMOItems
+    maven("https://repo.oraxen.com/releases") // Oraxen
+    maven("https://repo.momirealms.net/releases/") // CraftEngine
     mavenLocal()
 }
 
@@ -40,6 +45,14 @@ dependencies {
     compileOnly("ink.ptms:nms-all:1.0.0")
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("libs"))
+    /** 物品库 Hook **/
+    compileOnly("com.github.LoneDev6:API-ItemsAdder:3.6.1")
+    compileOnly("pers.neige.neigeitems:NeigeItems:1.15.96")
+    compileOnly("net.Indyuce:MMOItems-API:6.9.5-SNAPSHOT")
+    compileOnly("io.th0rgal:oraxen:1.171.0")
+    compileOnly("ink.ptms:Zaphkiel:2.0.14")
+    compileOnly("net.momirealms:craft-engine-core:0.0.22")
+    compileOnly("net.momirealms:craft-engine-bukkit:0.0.22")
 }
 
 tasks.withType<JavaCompile> {
