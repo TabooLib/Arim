@@ -19,6 +19,8 @@ import kotlin.jvm.optionals.getOrElse
  * arim-inv {token} {action} [amount {action}]
  *
  * arim-inv check "name:all(start(&c机械),c(靴))" amount 10
+ * arim-inv take "name:all(start(&c机械),c(靴))" amount 10
+ * arim-inv count "name:all(start(&c机械),c(靴))"
  */
 @KetherParser(["arim-inv", "arim-inventory"], shared = true)
 fun parseInventory() = combinationParser {
