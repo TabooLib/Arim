@@ -3,15 +3,10 @@ package top.maplex.arim.tools.itemmanager
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import taboolib.common.LifeCycle
-import taboolib.common.platform.Awake
 import taboolib.common.platform.function.info
-import taboolib.common.platform.function.warning
 import taboolib.library.xseries.XMaterial
 import taboolib.module.chat.colored
 import taboolib.platform.util.buildItem
-import top.maplex.arim.tools.itemmanager.source.*
-import java.util.concurrent.ConcurrentHashMap
 
 /**
  * 示例
