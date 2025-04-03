@@ -41,7 +41,7 @@ class SourceMinecraft : ItemSource {
                 ?: XMaterial.values().find { it.legacy.any { legacy -> legacy.equals(id, ignoreCase = true) } }
                 ?: XMaterial.values().maxByOrNull { Strings.similarDegree(id.uppercase(), it.name) }
                     )?.parseItem()
-                ?: ItemStack(Material.AIR)
+                ?: ItemStack(Material.valueOf(id.uppercase()))
         }
 
     }
