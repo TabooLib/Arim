@@ -17,6 +17,13 @@
 1. 添加依赖
 
 ```kts
+repositories {
+    maven {
+        // 枫溪的仓库
+        url = uri("https://nexus.maplex.top/repository/maven-public/")
+        isAllowInsecureProtocol = true
+    }
+}
 dependencies {
     taboo("top.maplex.arim:Arim:VERSION") // 替换为最新版本
 }
