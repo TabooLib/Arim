@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     java
     `maven-publish`
-    id("io.izzel.taboolib") version "2.0.22"
+    id("io.izzel.taboolib") version "2.0.23"
     kotlin("jvm") version "1.8.22"
 }
 
@@ -57,6 +57,8 @@ dependencies {
     compileOnly("ink.ptms:Zaphkiel:2.0.14")
     compileOnly("net.momirealms:craft-engine-core:0.0.22")
     compileOnly("net.momirealms:craft-engine-bukkit:0.0.22")
+    /** 数学表达式 **/
+    compileOnly("com.notkamui.libs:keval:1.1.1")
 }
 
 tasks.withType<JavaCompile> {
